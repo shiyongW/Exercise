@@ -15,3 +15,14 @@ PS培训系统
 营业培训系统
 协助代理商培训销售人员，通过在线\线下学习相关设备知识，通过线上考试评估，让销售人员掌握斗山设备的知识概念，提升设备销售
 主要功能：学习资源、在线调研、我的课堂、销售精英大赛等
+
+第一次提交
+echo "# Python" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/shiyongW/Python.git
+git push -u origin master
+更新
+git remote add origin https://github.com/shiyongW/Python.git
+git push -u origin master
