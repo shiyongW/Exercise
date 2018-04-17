@@ -6,8 +6,9 @@ import re
 class shuangseqiu():
     
     def __init__(self):
-        self.quanzhong = [2.618,1.618,4.236]#权重，分别为一周统计数据，一月统计数据，
+        #self.quanzhong = [0.191,0.382,0.5]#权重，分别为一周统计数据，一月统计数据，
         #一年统计数据与完全随机权重的比值，
+        self.quanzhong = [2.618,1.618,4.236]
         #表示对最后选出的号码的影响力大小，此数据依据最伟大的黄金分割点制定。
         #self.quanzhong = [1,1,1]
         self.qishu = [4,13,41,153]#一周、一月、一年的彩票期数
@@ -45,15 +46,17 @@ class shuangseqiu():
         #print(ball_lst)
         #年数据存储
         for i in range(6):
+            #print("ball_lst["+str(i)+"]=",ball_lst[i])
             self.__count__(ball_lst[i],self.red_dict, data_long)
         self.__count__(ball_lst[6],self.blue_dict,data_long)
+        #print(ball_lst[6])
         #print(self.red_dict)
         #print(self.blue_dict)
         
     def __readdata__(self):
         #从文件读取彩票中奖纪录
         ball_file = open(self.fle, 'r')
-        #ball_lst = ball_file.readline()
+        ball_lst = ball_file.readline()
         #print(ball_lst)
         for i in range(1,self.qishu[2]):
             ball_lst = ball_file.readline().split()
@@ -63,10 +66,13 @@ class shuangseqiu():
             #print(ball_lst)
             ball_lst = ball_lst[4:]
             if i <= self.qishu[0]:
+                #print(ball_lst)
                 self.__countlst__(ball_lst,self.data_long[0])
             if i <= self.qishu[1]:
+                #print(ball_lst)
                 self.__countlst__(ball_lst,self.data_long[1])
             self.__countlst__(ball_lst,self.data_long[2])
+            #print(ball_lst)
         ball_file.close()
         #print(self.red_dict)
         #print('------------------------')
@@ -90,6 +96,7 @@ class shuangseqiu():
             value =  (1/len(color_rate)- color_rate[str(num)][self.data_long[0]])* self.quanzhong[0]/sum(self.quanzhong)#一周出现概率高，那么后面，出现概率就会降
             value += (color_rate[str(num)][self.data_long[1]] - 1/len(color_rate)) * self.quanzhong[1]/sum(self.quanzhong)
             value += (color_rate[str(num)][self.data_long[2]] - 1/len(color_rate)) * self.quanzhong[2]/sum(self.quanzhong)
+            #value += (color_rate[str(num)][self.data_long[2]] - 1/len(color_rate)) * self.quanzhong[3]/sum(self.quanzhong)
             return value
 
     def make_quanzhong(self):#生成整个权重的列表
@@ -152,7 +159,8 @@ class shuangseqiu():
     def print_best_number(self):#输出中奖概率最高的号码
         print('根据规则选出的最可能中奖的号码如下:')
         print('--------------------------------------------------')
-        print('红球：',sorted(list(x[1] for x in sorted(self.red_qz)[-6:])),'篮球：',sorted(self.blue_qz)[-1][1])
+        print('红球：',sorted(list(x[1] for x in sorted(self.red_qz)[-6:])),'蓝球：',
+              list(y[1] for y in sorted(self.blue_qz)[-1:]))
         print('--------------------------------------------------')
 
 
